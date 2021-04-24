@@ -2,7 +2,7 @@
     <div class="col-4">
         <div class="card">
             <img src="{{member.photoUrl || './assets/urer.png'}}" alt="{{member.knownAs}}"
-             class="card-img-top img-thumnail">
+               class="card-img-top img-thumnail">
             <div class="card-body">
                 <div>
                     <strong>Location</strong>
@@ -25,7 +25,6 @@
                 <div class="btn-group d-flex">
                     <button class="btn btn-primary">Like</button>
                     <button class="btn btn-success">Message</button>
-
                 </div>
             </div>
         </div>
@@ -41,8 +40,7 @@
             </tab>
             <tab heading='Interests'>
                 <h4>Interests</h4>
-                <p>{{member.interests}}</p>
-                
+                <p>{{member.interests}}</p>                
             </tab>
             <tab heading='Photos'>
                 <ngx-gallery [options]="galleryOptions" [images]="galleryImages"
@@ -50,8 +48,7 @@
             </tab>
             <tab heading='Messages'>
                 <p>Messages will be here</p>
-            </tab>
-            
+            </tab>            
         </tabset>
     </div>
 </div>
