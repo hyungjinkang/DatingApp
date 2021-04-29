@@ -17,6 +17,7 @@ namespace API.Helpers
                 //Above line eliminates getAge method in AppUser and the queries for passwordHash, and passwordSalt
             CreateMap<Photo, PhotoDto>();
             CreateMap<MemberUpdateDto, AppUser>();
+            CreateMap<RegisterDto, AppUser>();
         }
     }
 }
