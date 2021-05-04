@@ -19,7 +19,7 @@ export class MemberListComponent implements OnInit {
   userParams: UserParams;
   user: User;
   genderList = [{value: 'male', display: 'Males'}, {value: 'female', display: 'Females'}];
-
+  loading = false;
   constructor(private memberService: MembersService) {
       this.userParams = this.memberService.getUserParams();
    }
@@ -30,10 +30,12 @@ export class MemberListComponent implements OnInit {
   }
 
   loadMembers() {
-    //this.memberService.setUserParams(this.userParams);
+    this.loading = true;
+    this.memberService.setUserParams(this.userParams);
     this.memberService.getMembers(this.userParams).subscribe(response => {
       this.members = response.result;
       this.pagination = response.pagination;
+    this.loading = false;
     })
   }
   
@@ -43,8 +45,10 @@ export class MemberListComponent implements OnInit {
   }
 
   pageChanged(event: any) {
-    this.userParams.pageNumber = event.page;
-    this.memberService.setUserParams(this.userParams);
-    this.loadMembers();
+    if (this.pagination.currentPage !== event.page) {
+      this.userParams.pageNumber = event.page;
+      this.memberService.setUserParams(this.userParams);
+      this.loadMembers();
+   } // ngx pagination has a bug. It emits multiple events before loadMembers() is completed.
   }
 }
