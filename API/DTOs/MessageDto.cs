@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace API.DTOs
 {
@@ -14,5 +15,10 @@ namespace API.DTOs
         public string Content { get; set; }
         public DateTime? DateRead { get; set; }
         public DateTime MessageSent { get; set; }
+
+        [JsonIgnore]  //the below property is not sent to client.
+        public bool SenderDeleted { get; set; } //section 18
+        [JsonIgnore]  //the below property is not sent to client.
+        public bool RecipientDeleted { get; set; } //section 18
     }
 } 

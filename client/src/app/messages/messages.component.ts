@@ -1,3 +1,4 @@
+import { ConfirmService } from './../_services/confirm.service';
 import { MessageService } from './../_services/message.service';
 import { Component, OnInit } from '@angular/core';
 import { Pagination } from '../_models/pagination';
@@ -16,11 +17,12 @@ export class MessagesComponent implements OnInit {
   pageSize = 5;
   loading = false;
 
-  constructor(private messageService: MessageService) { }
+  constructor(private messageService: MessageService, private confirmService: ConfirmService) { }
 
   ngOnInit(): void {
     this.loadMessages();
   }
+  
   loadMessages() {
     this.loading = true;
     this.messageService.getMessages(this.pageNumber, this.pageSize, this.container).subscribe(response => {    
@@ -31,8 +33,13 @@ export class MessagesComponent implements OnInit {
   }
 
   deleteMessage(id: number) {
-    this.messageService.deleteMessage(id).subscribe(() => {
-      this.messages.splice(this.messages.findIndex(m => m.id === id), 1);
+    this.confirmService.confirm('Confirm delete message', 'This cannot be undone')
+    .subscribe(result => {
+      if (result) {
+        this.messageService.deleteMessage(id).subscribe(() => {
+          this.messages.splice(this.messages.findIndex(m => m.id === id), 1);
+        })
+      }
     })
   }
 
@@ -40,13 +47,11 @@ export class MessagesComponent implements OnInit {
 
   pageChanged(event: any) {
 
-    if (this.pageNumber !== event.page) {
-    
+    if (this.pageNumber !== event.page) {   
       this.pageNumber = event.page; 
       // There is a bug in ngx bootstrap pagination that sends multiple events when the element is disabled by ngIf
       // If the element is disabled by ngIf, its property is not updated well. This multible events inifinite loop on message pagination.
       this.loadMessages();
-
     }
   }
 

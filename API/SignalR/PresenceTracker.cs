@@ -13,7 +13,7 @@ namespace API.SignalR
 
         public Task<bool> UserConnected(string username, string connectionId) 
         {
-            bool isOnline = false;
+            bool isOnline = false; //'ture' value of this variable means user is changed to be online at the time when this method is executed.
             lock (OnlineUsers)
             {
                 if (OnlineUsers.ContainsKey(username))
@@ -32,7 +32,7 @@ namespace API.SignalR
 
         public Task<bool> UserDisconnected(string username, string connectionId)
         {
-            bool isOffline = false;
+            bool isOffline = false; //'ture' value of this variable means user is changed to be offline at the time when this method is executed.
             lock(OnlineUsers)
             {
                 if (!OnlineUsers.ContainsKey(username)) return Task.FromResult(isOffline);
