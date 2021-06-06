@@ -14,7 +14,8 @@ export class ConfirmService {
   confirm(title = 'Confirmation', 
     message = 'Are you sure you want to do this?', 
     btnOkText = 'Ok', 
-    btnCancelText = 'Cancel'): Observable<boolean> {
+    btnCancelText = 'Cancel'): Observable<boolean>
+  {
       const config = {
         initialState: {
           title,
@@ -26,9 +27,9 @@ export class ConfirmService {
     this.bsModelRef = this.modalService.show(ConfirmDialogComponent, config);
 
     return new Observable<boolean>(this.getResult());
-    }
+  }
 
-    private getResult() {
+  private getResult() {
       return (observer) => {
         const subscription = this.bsModelRef.onHidden.subscribe(() => {
           observer.next(this.bsModelRef.content.result);
@@ -40,5 +41,5 @@ export class ConfirmService {
           }
         }
       }
-    }
+  }
 }

@@ -14,8 +14,8 @@ namespace API.Controllers
     [Authorize]
     public class MessagesController : BaseApiController
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IMessageRepository _messageRepository;
+        //private readonly IUserRepository _userRepository;
+        //private readonly IMessageRepository _messageRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         public MessagesController(IUnitOfWork unitOfWork, IMapper mapper)
@@ -91,7 +91,7 @@ namespace API.Controllers
             if (message.Recipient.UserName == username) message.RecipientDeleted = true;
 
             if (message.SenderDeleted && message.RecipientDeleted)
-                _messageRepository.DeleteMessage(message);
+                _unitOfWork.MessageRepository.DeleteMessage(message);
 
             if (await _unitOfWork.Complete()) return Ok();
 

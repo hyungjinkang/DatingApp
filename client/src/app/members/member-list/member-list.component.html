@@ -46,8 +46,6 @@
                     [(ngModel)]="userParams.orderBy">Newest Members</button>
             </div>
         </div>
-
-
     </form>
 </div>
 
@@ -58,7 +56,7 @@
 </div>
 
 <div class="d-flex justify-content-center" *ngIf="pagination">
-    <pagination 
+    <pagination
         [boundaryLinks]="true" 
         [totalItems]="pagination.totalItems"
         [itemsPerPage]="pagination.itemsPerPage"

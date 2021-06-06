@@ -50,7 +50,9 @@ namespace API.Controllers
         [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            var user = await _unitOfWork.UserRepository.GetMemberAsync(username); //before: ~GetUserByUsernameAsync(username);
+            var currentUsername = User.GetUsername();
+            var user = await _unitOfWork.UserRepository.GetMemberAsync(username,
+                isCurrentUser: currentUsername == username); //before: ~GetUserByUsernameAsync(username);
             return user; //before: _mapper.Map<MemberDto>(user); 
         }
 
@@ -79,13 +81,15 @@ namespace API.Controllers
             var photo = new Photo
             {
                 Url = result.SecureUrl.AbsoluteUri,
-                PublicId = result.PublicId
+                PublicId = result.PublicId,
+                IsApproved = false  //photo approval is needed from admin or moderator
             };
 
-            if (user.Photos.Count == 0)
-            {
-                photo.IsMain = true;
-            }
+            // photo can be set main after it is approved. So the below code is removed.
+            // if (user.Photos.Count == 0)
+            // {
+            //     photo.IsMain = true;
+            // }
 
             user.Photos.Add(photo);
 
@@ -116,6 +120,8 @@ namespace API.Controllers
 
             return BadRequest("Failed to set main photo");
         }
+
+
 
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId)

@@ -16,7 +16,11 @@ namespace API.Helpers
                     src.Photos.FirstOrDefault(x => x.IsMain).Url)) //make MemberDto.photoUrl populated
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
                 //Above line eliminates getAge method in AppUser and the queries for passwordHash, and passwordSalt
+            
             CreateMap<Photo, PhotoDto>();
+
+            CreateMap<Photo, PhotoForApprovalDto>();
+
             CreateMap<MemberUpdateDto, AppUser>();
             CreateMap<RegisterDto, AppUser>();
             CreateMap<Message, MessageDto>()

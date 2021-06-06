@@ -20,6 +20,7 @@ export class MemberListComponent implements OnInit {
   user: User;
   genderList = [{value: 'male', display: 'Males'}, {value: 'female', display: 'Females'}];
   loading = false;
+
   constructor(private memberService: MembersService) {
       this.userParams = this.memberService.getUserParams();
    }
@@ -33,8 +34,8 @@ export class MemberListComponent implements OnInit {
     this.loading = true;
     this.memberService.setUserParams(this.userParams);
     this.memberService.getMembers(this.userParams).subscribe(response => {
-      this.members = response.result;
-      this.pagination = response.pagination;
+    this.members = response.result;
+    this.pagination = response.pagination;
     this.loading = false;
     })
   }

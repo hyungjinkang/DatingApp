@@ -35,6 +35,8 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.member = data.member;//property of data is defined in app-routing.module.ts
+      
+
     })
 
     this.route.queryParams.subscribe(params => {
@@ -59,6 +61,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   getImages(): NgxGalleryImage[] {
     const imageUrls = [];
     for (const photo of this.member.photos) {
+      if(photo.isApproved) 
       imageUrls.push({
         small: photo?.url,
         medium: photo?.url,
