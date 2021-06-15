@@ -29,7 +29,10 @@ namespace API.Data
 
         public bool HasChanges()
         {
-            return _context.ChangeTracker.HasChanges();
+            _context.ChangeTracker.DetectChanges(); //added to fix message dateRead setting error 
+            var changes = _context.ChangeTracker.HasChanges();
+
+            return changes;
         }
     }
 }

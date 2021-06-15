@@ -112,8 +112,11 @@ namespace API.Controllers
                 {
                     _unitOfWork.PhotoRepository.RemovePhoto(photo);
                 }
+                else {
+                    return BadRequest("Fail to remove due to image storage server connection. Try later");
+                }
             } 
-            else{
+            else {
                 _unitOfWork.PhotoRepository.RemovePhoto(photo);
             }
             
