@@ -118,7 +118,7 @@ namespace API.Data
 
             //     await _context.SaveChangesAsync();
             // }
-
+            await _context.SaveChangesAsync();
             return messages;
         }
 
